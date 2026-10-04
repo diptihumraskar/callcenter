@@ -1,10 +1,21 @@
-import os
+import pytest
 
 from src.utils.llm_factory import get_llm
 
-os.environ.setdefault("OPENAI_API_KEY", "test-key")
-os.environ.setdefault("GOOGLE_API_KEY", "test-key")
-os.environ.setdefault("GROQ_API_KEY", "test-key")
+# These tests must pass with no real API keys. A .env created from
+# .env.example (the documented `cp .env.example .env` setup step) loads
+# blank-string values for OPENAI_API_KEY / GOOGLE_API_KEY / GROQ_API_KEY via
+# src.utils.config's load_dotenv() at import time, which makes
+# os.environ.setdefault(...) a no-op (the keys already "exist", just empty).
+# monkeypatch.setenv forces the value regardless of what's already in the
+# environment, so these tests are immune to whatever .env happens to exist.
+
+
+@pytest.fixture(autouse=True)
+def _fake_provider_keys(monkeypatch):
+    monkeypatch.setenv("OPENAI_API_KEY", "test-key")
+    monkeypatch.setenv("GOOGLE_API_KEY", "test-key")
+    monkeypatch.setenv("GROQ_API_KEY", "test-key")
 
 
 def test_get_llm_openai():

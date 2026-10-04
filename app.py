@@ -9,6 +9,7 @@ from src.agents.transcription import _get_whisper_model
 from src.database.connection import get_engine, init_db
 from src.graph.workflow import WorkflowDeps, compile_workflow
 from src.security.audit import AuditLogger
+from src.services.pipeline import set_max_temp_files
 from src.ui.app import build_app
 from src.utils.config import load_config
 from src.utils.observability_providers import get_langfuse_handler
@@ -22,6 +23,7 @@ def main() -> None:
 
     engine = get_engine(config.db_path, config.db_encryption_key)
     init_db(engine)
+    set_max_temp_files(config.max_file_retention)
 
     logger.info("Loading faster-whisper model (%s)...", config.whisper_model_size)
     _get_whisper_model(config.whisper_model_size)
@@ -54,8 +56,12 @@ def main() -> None:
         langfuse_handler=langfuse_handler,
     )
 
-    server_name = "0.0.0.0" if os.getenv("SPACE_ID") else "127.0.0.1"
-    demo.launch(server_name=server_name, server_port=7860)
+    # Hosted platforms (HF Spaces sets SPACE_ID, Render/Railway set PORT) need
+    # the server reachable from outside the container, on the port they assign.
+    hosted = bool(os.getenv("SPACE_ID") or os.getenv("PORT"))
+    server_name = "0.0.0.0" if hosted else "127.0.0.1"
+    server_port = int(os.getenv("PORT", "7860"))
+    demo.launch(server_name=server_name, server_port=server_port)
 
 
 if __name__ == "__main__":

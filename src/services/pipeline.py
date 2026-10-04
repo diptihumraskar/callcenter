@@ -13,7 +13,13 @@ from src.graph.state import AudioInput
 from src.utils.formatters import format_qa, format_summary, secs_to_mmss
 
 _temp_files: list[str] = []
-_MAX_TEMP_FILES = 50
+_MAX_TEMP_FILES = 50  # overridden at startup by set_max_temp_files() from config
+
+
+def set_max_temp_files(limit: int) -> None:
+    """Set the rolling temp-file retention cap (wired to MAX_TEMP_FILE_RETENTION)."""
+    global _MAX_TEMP_FILES
+    _MAX_TEMP_FILES = limit
 
 
 @dataclass
