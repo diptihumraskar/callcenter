@@ -14,6 +14,10 @@ COPY src ./src
 COPY app.py ./
 RUN pip install --no-cache-dir -c constraints.txt ".[observability]"
 
+# Presidio PII redaction needs the spaCy English model baked into the image;
+# otherwise it would try to download it on the first request.
+RUN python -m spacy download en_core_web_sm
+
 COPY . .
 
 RUN mkdir -p data/audio data/samples

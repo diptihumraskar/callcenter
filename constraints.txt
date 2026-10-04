@@ -1,27 +1,33 @@
-# Known-good dependency pins (tested: 119 tests pass). Used as pip constraints in the
-# Dockerfile so builds don't spend 10+ minutes in resolver backtracking.
-# Regenerate: pip install -e '.[dev,observability]' && pip freeze | grep -v call-center > constraints.txt
+# Known-good dependency pins (tested). Used as pip constraints in the Dockerfile so builds
+# don't spend 10+ minutes in resolver backtracking. The spaCy model (en_core_web_sm) is
+# installed separately in the Dockerfile via 'python -m spacy download'.
+# Regenerate: pip install -e '.[dev,observability]' && pip freeze | grep -v -e call-center -e en_core_web_sm > constraints.txt
 aiofiles==24.1.0
 annotated-doc==0.0.5
 annotated-types==0.8.0
 anyio==4.15.1
 av==18.1.0
 backoff==2.2.1
+blis==1.3.3
 brotli==1.2.0
+catalogue==2.0.10
 certifi==2026.7.22
 cffi==2.1.1
 cfgv==3.5.0
 charset-normalizer==3.5.2
 click==8.5.0
+cloudpathlib==0.26.0
+confection==1.3.3
 coverage==7.16.2
-cryptography==50.0.2
+cryptography==48.0.1
 ctranslate2==4.8.2
+cymem==2.0.13
 distlib==0.4.3
 distro==1.9.0
 fastapi==0.142.2
 faster-whisper==1.2.1
 ffmpy==1.0.0
-filelock==4.0.9
+filelock==4.0.10
 filetype==1.2.0
 flatbuffers==25.12.19
 fsspec==2026.9.0
@@ -61,6 +67,7 @@ langsmith==0.14.4
 markdown-it-py==4.2.0
 MarkupSafe==3.0.4
 mdurl==0.1.2
+murmurhash==1.0.15
 mutagen==1.48.1
 nodeenv==1.11.0
 numpy==2.4.6
@@ -78,10 +85,14 @@ orjson==3.12.0
 ormsgpack==1.12.2
 packaging==26.3
 pandas==2.3.3
+phonenumbers==9.0.40
 pillow==11.3.0
-platformdirs==4.12.2
+platformdirs==4.12.3
 pluggy==1.6.0
 pre_commit==4.6.2
+preshed==3.0.13
+presidio_analyzer==2.2.362
+presidio_anonymizer==2.2.364
 protobuf==7.36.2
 pyasn1==0.6.4
 pyasn1_modules==0.4.2
@@ -96,11 +107,12 @@ python-dateutil==2.9.0.post0
 python-discovery==1.6.1
 python-dotenv==1.2.4
 python-multipart==0.0.32
-pytz==2026.4
+pytz==2026.5
 PyYAML==6.0.3
 regex==2026.9.29
 reportlab==5.0.1
 requests==2.34.2
+requests-file==3.0.1
 requests-toolbelt==1.0.0
 rich==15.0.0
 ruff==0.16.10
@@ -108,12 +120,19 @@ safehttpx==0.1.7
 semantic-version==2.10.0
 shellingham==1.5.4
 six==1.17.0
+smart_open==8.0.2
 sniffio==1.3.1
 soundfile==0.14.0
+spacy==3.8.16
+spacy-legacy==3.0.12
+spacy-loggers==1.0.5
 SQLAlchemy==2.1.3
+srsly==2.5.4
 starlette==0.52.1
 tenacity==9.1.4
+thinc==8.3.13
 tiktoken==0.14.0
+tldextract==5.4.0
 tokenizers==0.23.2
 tomlkit==0.13.3
 tqdm==4.70.1
@@ -126,6 +145,8 @@ urllib3==2.8.0
 uuid_utils==0.17.1
 uvicorn==0.54.0
 virtualenv==21.14.5
+wasabi==1.1.3
+weasel==1.0.0
 websockets==15.0.1
 wrapt==2.5.0
 xxhash==4.0.1
