@@ -7,10 +7,12 @@ RUN apt-get update \
 
 WORKDIR /app
 
-COPY pyproject.toml ./
+# constraints.txt pins every dependency to the tested versions; without it pip
+# backtracks through hundreds of google-genai / fastapi releases (10+ min builds).
+COPY pyproject.toml constraints.txt README.md ./
 COPY src ./src
 COPY app.py ./
-RUN pip install --no-cache-dir .
+RUN pip install --no-cache-dir -c constraints.txt ".[observability]"
 
 COPY . .
 
