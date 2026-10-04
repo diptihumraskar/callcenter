@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+build/
+dist/
+
+# Environments / secrets
+.env
+.env.*
+.venv/
+venv/
+
+# Runtime data
+data/calls.db
+data/audio/*
+!data/audio/.gitkeep
+
+# Model weights
+models/
+*.bin
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/

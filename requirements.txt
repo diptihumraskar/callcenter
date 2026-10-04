@@ -1,0 +1,22 @@
+langgraph>=0.4
+langchain-core>=0.3
+langchain-openai>=0.2
+langchain-google-genai>=2.0
+langchain-groq>=0.2
+faster-whisper>=1.0
+pydantic>=2.6
+SQLAlchemy>=2.0
+reportlab>=4.0
+gradio>=5.0,<6.0
+mutagen>=1.47
+python-dotenv>=1.0
+soundfile>=0.12
+numpy>=1.26
+langsmith>=0.13
+
+# Optional: only needed if LANGFUSE_ENABLED=true in .env (see .env.example).
+# Langfuse's LangChain integration needs the full "langchain" metapackage
+# too (langchain-core alone isn't enough). Uncomment both, or install with:
+#   pip install "langfuse>=3.0" langchain
+# langfuse>=3.0
+# langchain
